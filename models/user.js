@@ -2,14 +2,9 @@
 const {
   Model
 } = require('sequelize');
-const { hashing } = require('../helpers/hash');
+const { hashing } = require('../helpers/bcrypt');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       User.hasMany(models.News)
     }
@@ -20,10 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: {
-          msg: "userName is required"
+          msg: "Username is required"
         },
         notEmpty: {
-          msg: "userName is required"
+          msg: "Username is required"
         }
       }
     },
@@ -32,10 +27,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'email is required'
+          msg: 'Email is required'
         },
         notEmpty: {
-          msg: 'email is required'
+          msg: 'Email is required'
         },
         isEmail: true
       },
@@ -49,13 +44,26 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'password is required'
+          msg: 'Password is required'
         },
         notEmpty: {
-          msg: 'password is required'
+          msg: 'Password is required'
         },
       },
-    }
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "User",
+      validate: {
+        notNull: {
+          msg: 'Password is required'
+        },
+        notEmpty: {
+          msg: 'Password is required'
+        }
+      }
+      }
   }, {
     hooks: {
       beforeCreate : async (instance, options) => {
