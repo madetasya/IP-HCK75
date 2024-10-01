@@ -10,14 +10,58 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      News.belongsTo(models.User)
     }
   }
   News.init({
-    title: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    imageUrl: DataTypes.STRING,
-    UserId: DataTypes.INTEGER
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "title is required"
+        },
+        notEmpty: {
+          msg: "title is required"
+        }
+      }
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "description is required"
+        },
+        notEmpty: {
+          msg: "description is required"
+        }
+      }
+    },
+    imageUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "imageUrl is required"
+        },
+        notEmpty: {
+          msg: "imageUrl is required"
+        }
+      }
+    },
+    UserId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "UserId is required"
+        },
+        notEmpty: {
+          msg: "UserId is required"
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'News',
