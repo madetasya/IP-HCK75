@@ -10,11 +10,11 @@ function errorHandler(err, req, res, next){
             break;
          case 'RequireInput':
             status = 400
-            message = 'email/password is required'
+            message = 'Email/Password is required'
             break;
         case 'InvalidUser':
             status = 401
-            message = 'invalid email/password'
+            message = 'Invalid email/password'
             break;
         case 'InvalidToken':
         case 'Forbidden':

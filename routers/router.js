@@ -11,11 +11,11 @@ router.post("/register", UserController.register)
 router.use(authentication);
 router.post("/login",UserController.login)
 
-//Category Controller  
+//Article Controller  
 router.get("/news",ArticleController);
 router.post("/news", authorization,ArticleController );
-router.put("/news/:id", );
-router.delete("/news/:id", );
+router.put("/news/:id",authorization,ArticleController );
+router.delete("/news/:id",authorization,ArticleController );
 
 router.use(errorHandler);
 
