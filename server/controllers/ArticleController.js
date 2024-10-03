@@ -88,9 +88,10 @@ class ArticleController {
 
   static async createArticle(req, res, next) {
     try {
-      const article = await Article.create({
-        ...req.body,
-      });
+      let { title, description, imageUrl, UserId} = req.body
+      const article = await Article.create(
+       { title, description, imageUrl, UserId}
+      );
       res.status(201).json(article);
     } catch (error) {
       next(error);

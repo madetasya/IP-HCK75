@@ -1,12 +1,11 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 const { hashing } = require('../helpers/bcrypt');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      User.hasMany(models.News)
+      User.hasMany(models.Article)
     }
   }
   User.init({
@@ -19,11 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: "Username is required"
-        },
-        unique: {
-        args: true,
-        msg: 'Username already in use!'
-      }
+        }
       }
     },
     email: {
