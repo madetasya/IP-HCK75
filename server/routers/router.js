@@ -5,12 +5,38 @@ const authentication = require("../middleware/authentication");
 const authorization = require("../middleware/authorization");
 const UserController = require("../controllers/UserController.js");
 const ArticleController = require("../controllers/ArticleController.js");
+
+//CORS
+const cors = require('cors')
+app.use(cors())
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
+
+
+
+//API GANG
 const Gemini = require("../controllers/GeminiController.js");
+const NewsAPI = require('newsapi');
+const newsapi = new NewsAPI(API_KEY);
+
+router.get('/top-news', async (req, res) => {
+  try {
+    const response = await newsapi.v2.topHeadlines({
+      q: 'trump',
+      category: 'politics',
+      language: 'en',
+      country: 'us'
+    });
+    res.json(response);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch news' });
+  }
+});
+
 
 //Register & Login
 router.post("/register", UserController.register)
 router.post("/login",UserController.login)
-
 router.post("/gemini",Gemini.gemini)
 
 //Article Controller  

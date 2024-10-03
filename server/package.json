@@ -14,15 +14,18 @@
     "@google/generative-ai": "^0.21.0",
     "@react-oauth/google": "^0.12.1",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "express": "^4.21.0",
     "google-auth-library": "^9.14.1",
     "jsonwebtoken": "^9.0.2",
+    "newsapi": "^2.4.1",
     "pg": "^8.13.0",
     "sequelize": "^6.37.3"
   },
   "devDependencies": {
     "dotenv": "^16.4.5",
     "nodemon": "^3.1.7",
-    "sequelize-cli": "^6.6.2"
+    "sequelize-cli": "^6.6.2",
+    "tailwindcss": "^3.4.13"
   }
 }
