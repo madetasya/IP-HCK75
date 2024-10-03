@@ -5,7 +5,6 @@ import bigsun from "../assets/bigsun.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { GoogleLogin } from "../component/GoogleLoginButton";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -27,6 +26,7 @@ export default function Login() {
     }
   };
 
+  
 
   return (
     <body className="bg-gradient-to-t from-[#e4d9c7ff] to-[#e4d9c7ff] relative min-h-screen">
@@ -117,16 +117,6 @@ export default function Login() {
               >
                 Sign in
               </button>
-              <div>
-                <div className="my-4 flex items-center gap-4">
-                  <hr className="w-full border-gray-300" />
-                  <p className="text-sm text-gray-800 text-center">or</p>
-                  <hr className="w-full border-gray-300" />
-                </div>
-                <div className="flex justify-center">
-                  <GoogleLogin />
-                </div>
-              </div>
 
               <p className="text-sm font-light text-brown-400">
                 No Account?{" "}
@@ -141,6 +131,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+      <div id="buttonDiv"></div>;
     </body>
   );
 }

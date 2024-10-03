@@ -8,12 +8,12 @@ function GoogleLogin() {
   useEffect(() => {
     google.accounts.id.initialize({
       // fill this with your own client ID
-      client_id: import.meta.env.GOOGLE_CLIENT_ID,
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
       // callback function to handle the response
       callback: async (response) => {
         console.log("Encoded JWT ID token: " + response.credential);
         const { data } = await axios.post(
-          "https://api.mrkive.site/auth/google",
+          "apis/auth/google",
           {
             googleToken: response.credential,
           }

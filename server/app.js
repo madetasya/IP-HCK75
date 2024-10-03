@@ -4,6 +4,7 @@ const app = express()
 const port = 3000
 const router = require('./routers/router')
 const errorHandler = require('./middleware/errors')
+app.use(cors());
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
