@@ -1,32 +1,31 @@
-const { verifyToken } = require("../helpers/jwt")
-const { User } = require(`../models`)
+const { verifyToken } = require("../helpers/jwt");
+const { User } = require(`../models`);
 
 const authentication = async (req, res, next) => {
   try {
-    const { authorization } = req.headers
+    // console.log(authorization, "ASASASAS");
+    console.log("masuk sini?");
+    const { authorization } = req.headers;
 
     if (!authorization) {
-      throw { name: "Unauthorized" }
+      throw { name: "Unauthorized" };
     }
 
-    const [bearer, access_token] = authorization.split(" ")
-    const { id } = verifyToken(access_token)
+    const [bearer, access_token] = authorization.split(" ");
 
-    const findUser = await User.findByPk(id)
+    const { id } = verifyToken(access_token);
 
-    if (!findUser) {
-      throw { name: "Unauthorized" }
-    }
+    const findUser = await User.findByPk(id);
 
     req.user = {
       id: findUser.id,
-      role: findUser.role
-    }
+      role: findUser.role,
+    };
 
-    next()
+    next();
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
-module.exports = authentication
+module.exports = authentication;

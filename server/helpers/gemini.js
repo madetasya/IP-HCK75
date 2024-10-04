@@ -9,7 +9,7 @@ const getDisasterSlogan = async () => {
     const response = await gemini.generateText({
       model: "gemini-1.5-flash",
       prompt:
-        "Berikan slogan tentang bencana alam yang sering terjadi minggu ini",
+        "Berikan HANYA SATU slogan TANPA PENJELASAN tentang bencana alam yang sering terjadi minggu ini",
       temperature: 1,
       maxOutputTokens: 64,
       topP: 0.95,

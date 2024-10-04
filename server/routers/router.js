@@ -7,8 +7,6 @@ const UserController = require("../controllers/UserController.js");
 const ArticleController = require("../controllers/ArticleController.js");
 
 //CORS
-const cors = require("cors");
-router.use(cors());
 
 //API GANG
 const GeminiController = require("../controllers/GeminiController.js");
@@ -41,8 +39,8 @@ router.post("/auth/google", UserController.googleLogin);
 //Article Controller
 router.get("/article", ArticleController.getAllArticle);
 router.get("/article/:id", ArticleController.getArticleById);
-// router.use(authentication);
 // router.use(authorization);
+// router.use(authentication);
 router.post("/article", ArticleController.createArticle);
 router.put("/article/:id", ArticleController.updatePostById);
 router.delete("/article/:id", ArticleController.deleteArticleById);

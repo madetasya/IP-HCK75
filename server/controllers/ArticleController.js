@@ -35,7 +35,7 @@ class ArticleController {
 
       //PAGINATION
 
-      const limit = 10;
+      const limit = 50;
       let pageNumber = 1;
 
       if (page) {
@@ -54,14 +54,18 @@ class ArticleController {
       }
 
       const { count, rows } = await Article.findAndCountAll(paramsQuery);
-
+      console.log(rows, "<< rows");
       res.status(200).json({
-        page: +pageNumber,
         data: rows,
-        totalData: count,
-        totalPage: Math.ceil(count / limit),
-        dataPerPage: +limit,
       });
+      // res.status(200).json(rows);
+      // res.status(200).json({
+      //   page: +pageNumber,
+      //   data: rows,
+      //   totalData: count,
+      //   totalPage: Math.ceil(count / limit),
+      //   dataPerPage: +limit,
+      // });
     } catch (error) {
       console.log(error);
     }
@@ -96,9 +100,10 @@ class ArticleController {
         imageUrl,
         UserId: userId,
       });
-
+      console.log("jalan ngak?");
       res.status(201).json({ message: "Article created", data: newArticle });
     } catch (error) {
+      console.log("masuk catch???");
       console.error("Error creating article:", error);
       res.status(500).json({ message: "Error creating article" });
     }

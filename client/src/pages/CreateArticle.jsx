@@ -10,7 +10,6 @@ export default function CreateArticle() {
     imageUrl: "",
   });
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -19,12 +18,15 @@ export default function CreateArticle() {
     });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axiosIns.post("/article", formData);
-      navigate("/"); 
+      await axiosIns.post("/article", formData, {
+        headers: {
+          Authorization: "Bearer" + localStorage.getItem("access_token"),
+        },
+      });
+      navigate("/");
     } catch (error) {
       console.log("Error creating article:", error);
     }
@@ -36,7 +38,6 @@ export default function CreateArticle() {
         Create New Article
       </h1>
       <form onSubmit={handleSubmit}>
-        {/* Title Input */}
         <div className="mb-6">
           <label htmlFor="title" className="block text-buff text-lg mb-2">
             Title

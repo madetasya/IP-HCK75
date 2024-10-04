@@ -16,12 +16,12 @@ export default function ArticleDetail() {
     }
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async (id) => {
     try {
       await axiosIns.delete(`/article/${id}`);
       navigate("/");
     } catch (error) {
-      console.log("Failed to delete the article:", error);
+      console.log(error);
     }
   };
 
@@ -44,10 +44,10 @@ export default function ArticleDetail() {
       </div>
 
       <div className="lg:w-1/2 lg:pl-10 mt-6 lg:mt-0">
-        <h1 className="text-4xl font-bold text-chamoisee mb-4">
+        <h1 className="text-4xl font-bold text-[#263E40] mb-4">
           {article.title}
         </h1>
-        <p className="text-lg text-platinum leading-relaxed">
+        <p className="text-lg text-chamoisee leading-relaxed">
           {article.description}
         </p>
 
@@ -60,7 +60,7 @@ export default function ArticleDetail() {
           </button>
 
           <button
-            onClick={handleDelete}
+            onClick={() => handleDelete(id)}
             className="bg-light-blue text-seashell py-2 px-4 rounded-lg shadow-md hover:bg-dark-green transition-colors"
           >
             Delete

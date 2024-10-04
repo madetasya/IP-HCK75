@@ -1,15 +1,16 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import wave01 from "../assets/wave01.png";
 import wave02 from "../assets/wave02.png";
 import wave03 from "../assets/wave03.png";
 import bigsun from "../assets/bigsun.png";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosIns } from "../axios";
+// import { getDisasterSlogan } from "../gemini";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [disasterSlogan, setDisasterSlogan] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -27,11 +28,18 @@ export default function Login() {
     }
   };
 
+  // useEffect(() => {
+  //   const fetchSlogan = async () => {
+  //     const slogan = await getDisasterSlogan();
+  //     setDisasterSlogan(slogan);
+  //   };
+
+  //   fetchSlogan();
+  // }, []);
+
   useEffect(() => {
     google.accounts.id.initialize({
-      // fill this with your own client ID
       client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-      // callback function to handle the response
       callback: async (response) => {
         console.log("Encoded JWT ID token: " + response.credential);
         const { data } = await axiosIns.post("/auth/google", {
@@ -39,24 +47,25 @@ export default function Login() {
         });
 
         localStorage.setItem("access_token", data.access_token);
-
-        // navigate to the home page or do magic stuff
-        navigate('/');
+        navigate("/");
       },
     });
-    google.accounts.id.renderButton(
-      // HTML element ID where the button will be rendered
-      // this should be existed in the DOM
-      document.getElementById("buttonDiv"),
-      // customization attributes
-      { theme: "outline", size: "large" }
-    );
-    // to display the One Tap dialog, or comment to remove the dialog
+    google.accounts.id.renderButton(document.getElementById("buttonDiv"), {
+      theme: "outline",
+      size: "large",
+    });
     google.accounts.id.prompt();
   }, []);
 
   return (
     <body className="bg-gradient-to-b from-[#ecebe1] to-[#ffcd76] relative min-h-screen">
+      <div
+        className="absolute top-5 right-5 text-3xl font-bold text-light-blue"
+        style={{ color: "#977458ff" }}
+      >
+        {disasterSlogan}
+      </div>
+
       <div className="absolute bottom-0 left-0 right-0">
         <img
           src={bigsun}
@@ -79,6 +88,7 @@ export default function Login() {
           className="absolute w-full bottom-0 shadow-sm"
         />
       </div>
+
       <div className="flex flex-col items-center justify-center min-h-screen bg-beige-100">
         <div className="relative p-1 bg-gradient-to-t from-[#fef7f1ff] via-[#fef7f1ff] to-[#fef7f1ff] rounded-lg">
           <div className="rounded-md w-full max-w-md p-8 space-y-6 bg-[#92bcbeff]">
