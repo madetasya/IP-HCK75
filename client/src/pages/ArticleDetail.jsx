@@ -19,7 +19,7 @@ export default function ArticleDetail() {
   const handleDelete = async () => {
     try {
       await axiosIns.delete(`/article/${id}`);
-      navigate("/"); 
+      navigate("/");
     } catch (error) {
       console.log("Failed to delete the article:", error);
     }
@@ -35,7 +35,6 @@ export default function ArticleDetail() {
 
   return (
     <div className="container mx-auto py-10 flex flex-col lg:flex-row items-start">
-
       <div className="lg:w-1/2">
         <img
           src={article.imageUrl}
@@ -43,7 +42,6 @@ export default function ArticleDetail() {
           className="w-full h-auto object-cover rounded-lg shadow-lg"
         />
       </div>
-
 
       <div className="lg:w-1/2 lg:pl-10 mt-6 lg:mt-0">
         <h1 className="text-4xl font-bold text-chamoisee mb-4">
@@ -55,7 +53,7 @@ export default function ArticleDetail() {
 
         <div className="mt-6 flex space-x-4">
           <button
-            onClick={() => navigate(`/article/${id}/edit`)}
+            onClick={() => navigate(`/${id}/edit`)}
             className="bg-buff text-seashell py-2 px-4 rounded-lg shadow-md hover:bg-chamoisee transition-colors"
           >
             Update

@@ -12,14 +12,14 @@ export default function Card({ post }) {
   return (
     <div
       className="bg-seashell rounded-lg shadow-lg overflow-hidden cursor-pointer"
-      onClick={handleCardClick} // Make entire card clickable
+      onClick={handleCardClick}
     >
       <figure>
         <img
-          src={post.imageUrl || "/path/to/default-image.jpg"} // Add fallback image
+          src={post.imageUrl || "/path/to/default-image.jpg"}
           onError={(e) => {
             e.target.src = "/path/to/default-image.jpg";
-          }} // Fallback if image can't load
+          }}
           alt={post.title}
           className="w-full h-64 object-cover"
         />
@@ -27,9 +27,9 @@ export default function Card({ post }) {
       <div className="p-4">
         <h2 className="text-xl font-semibold text-chamoisee">{post.title}</h2>
         <Link
-          to={`/article/${post.id}`}
+          to={`/${post.id}`}
           className="text-light-blue hover:underline hover:text-dark-green transition-colors duration-300"
-          onClick={(e) => e.stopPropagation()} // Prevent the entire card click to trigger the link
+          onClick={(e) => e.stopPropagation()}
         >
           Read More
         </Link>

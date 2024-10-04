@@ -6,6 +6,7 @@ import Homepage from "./pages/Homepage";
 import Navbar from "./pages/Navbar";
 import ArticleDetail from "./pages/ArticleDetail";
 import ArticleEdit from "./pages/ArticleEdit";
+import CreateArticle from "./pages/CreateArticle";
 
 export const router = createBrowserRouter([
   {
@@ -17,12 +18,16 @@ export const router = createBrowserRouter([
         element: <Homepage />,
       },
       {
-        path: "article/:id", 
+        path: "/:id",
         element: <ArticleDetail />,
       },
       {
-        path: "article/:id/edit", 
+        path: "/:id/edit",
         element: <ArticleEdit />,
+      },
+      {
+        path: "/create-article",
+        element: <CreateArticle />,
       },
     ],
   },
@@ -39,22 +44,17 @@ export const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
   },
-  {
-    path: "/nav",
-    element: <Navbar />,
-  },
 ]);
 
-
-  //   {
-  //     path: "/admin",
-  //     element: <RootLayout />,
-  //     loader: () => {
-  //       const access_token = localStorage.getItem("access_token");
-  //       if (!access_token) throw redirect("/login");
-  //       return null;
-  //     },
-  //     children: [
-  //       { path: "", element: <h1>Hello Wolrf</h1>},
-  //     ],
-  //   },
+//   {
+//     path: "/admin",
+//     element: <RootLayout />,
+//     loader: () => {
+//       const access_token = localStorage.getItem("access_token");
+//       if (!access_token) throw redirect("/login");
+//       return null;
+//     },
+//     children: [
+//       { path: "", element: <h1>Hello Wolrf</h1>},
+//     ],
+//   },

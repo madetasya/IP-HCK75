@@ -3,7 +3,6 @@ const { comparePass } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
 require("dotenv").config();
 const { OAuth2Client } = require("google-auth-library");
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 class UserController {
   static async register(req, res, next) {
@@ -45,36 +44,54 @@ class UserController {
   }
 
   static async googleLogin(req, res, next) {
+    const client = new OAuth2Client();
     try {
       // we receive googleToken from the client
       const { googleToken } = req.body;
+
       const ticket = await client.verifyIdToken({
         idToken: googleToken,
         // we use our client_id from the Google console
         audience: process.env.GOOGLE_CLIENT_ID,
       });
 
-      const payload = ticket.getPayload();
-      const email = payload.email; // Extract the email from the payload
+      const { email, name } = ticket.getPayload();
 
       const [user, created] = await User.findOrCreate({
         where: { email },
+        hooks: false,
         defaults: {
-          name: payload.name,
-          email: payload.email,
-          picture: payload.picture,
-          provider: "google",
-          // We can type any password as a placeholder.
-          // In future development, you should implement a feature to update the user's password.
+          userName: name,
+          email: email,
           password: "google_id",
         },
-        // Required to set hooks: false
-        hooks: false,
       });
+
+      // const [user, created] = await User.findOrCreate(
+      //   {
+      //     where: { email: email },
+      //     defaults: {
+      //       name: name,
+      //       email: email,
+      //       // picture: payload.picture,
+      //       // provider: "google",
+      //       // We can type any password as a placeholder.
+      //       // In future development, you should implement a feature to update the user's password.
+      //       password: "google_id",
+      //     },
+      //     // Required to set hooks: false
+      //   },
+      //   {
+      //     hooks: false,
+      //   }
+      // );
+      console.log(user, "????????????????????????????");
 
       const token = signToken({ id: user.id });
       res.status(created ? 201 : 200).json({ access_token: token });
     } catch (error) {
+      console.log(error);
+
       res.status(500).json({ message: "Internal server error" });
     }
   }

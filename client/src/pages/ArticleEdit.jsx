@@ -41,7 +41,7 @@ export default function ArticleEdit() {
     e.preventDefault();
     try {
       await axiosIns.put(`/article/${id}`, formData);
-      navigate(`/article/${id}`); // Redirect to the article detail page after updating
+      navigate(`/${id}`); // Redirect to the article detail page after updating
     } catch (error) {
       console.log("Failed to update the article:", error);
     }

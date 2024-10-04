@@ -1,75 +1,73 @@
-const { Article } = require("../models")
-const { Op } = require("sequelize")
-
+const { Article } = require("../models");
+const { Op } = require("sequelize");
 
 class ArticleController {
-    static async getAllArticle(req, res, next){
-        try {
-            const { search, filter, page } = req.query
+  static async getAllArticle(req, res, next) {
+    try {
+      const { search, filter, page } = req.query;
 
-            const paramsQuery = {}
+      const paramsQuery = {};
 
-            //SEARCH
+      //SEARCH
 
-            if(search){
-                paramsQuery.where = {
-                    title: {
-                        [ Op.iLike ]: `%${search}%`
-                    }
-                }
-            }
+      if (search) {
+        paramsQuery.where = {
+          title: {
+            [Op.iLike]: `%${search}%`,
+          },
+        };
+      }
 
-            if (filter){
-                paramsQuery.where = {
-                    category: filter
-                }
-            }
+      if (filter) {
+        paramsQuery.where = {
+          category: filter,
+        };
+      }
 
-            if( filter && search){
-                paramsQuery.where = {
-                    title: {
-                        [ Op.iLike ]: `%${search}%`
-                    },
-                    category: filter
-                }
-            }
+      if (filter && search) {
+        paramsQuery.where = {
+          title: {
+            [Op.iLike]: `%${search}%`,
+          },
+          category: filter,
+        };
+      }
 
-            //PAGINATION
+      //PAGINATION
 
-            const limit = 10
-            let pageNumber = 1
+      const limit = 10;
+      let pageNumber = 1;
 
-            if (page){
-                if(page.size){
-                    limit = page.size
-                    paramsQuery.limit = limit
-                }
-
-                if(page.number){
-                    pageNumber = page.number
-                    paramsQuery.offset = limit *  (pageNumber - 1)
-                }
-            } else {
-                paramsQuery.limit = limit
-                paramsQuery.offset = limit *  (pageNumber - 1)
-            }
-
-            const { count, rows } = await Article.findAndCountAll(paramsQuery)
-
-            res.status(200).json({
-                page: +pageNumber,
-                data: rows,
-                totalData: count,
-                totalPage: Math.ceil(count/limit),
-                dataPerPage: +limit
-            })
-
-        } catch (error) {
-            console.log(error);
+      if (page) {
+        if (page.size) {
+          limit = page.size;
+          paramsQuery.limit = limit;
         }
-    }
 
-    static async getArticleById(req, res, next) {
+        if (page.number) {
+          pageNumber = page.number;
+          paramsQuery.offset = limit * (pageNumber - 1);
+        }
+      } else {
+        paramsQuery.limit = limit;
+        paramsQuery.offset = limit * (pageNumber - 1);
+      }
+
+      const { count, rows } = await Article.findAndCountAll(paramsQuery);
+
+      res.status(200).json({
+        page: +pageNumber,
+        data: rows,
+        totalData: count,
+        totalPage: Math.ceil(count / limit),
+        dataPerPage: +limit,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async getArticleById(req, res, next) {
     try {
       const articleId = req.params.id;
       let getArticleId = await Article.findByPk(+articleId);
@@ -85,16 +83,24 @@ class ArticleController {
     }
   }
 
-
   static async createArticle(req, res, next) {
     try {
-      let { title, description, imageUrl, UserId} = req.body
-      const article = await Article.create(
-       { title, description, imageUrl, UserId}
-      );
-      res.status(201).json(article);
+      const { title, description, imageUrl } = req.body;
+
+      // const userId = req.user.id;
+      const userId = 1;
+
+      const newArticle = await Article.create({
+        title,
+        description,
+        imageUrl,
+        UserId: userId,
+      });
+
+      res.status(201).json({ message: "Article created", data: newArticle });
     } catch (error) {
-      next(error);
+      console.error("Error creating article:", error);
+      res.status(500).json({ message: "Error creating article" });
     }
   }
 
@@ -112,7 +118,7 @@ class ArticleController {
       next(error);
     }
   }
-   static async deleteArticleById(req, res, next) {
+  static async deleteArticleById(req, res, next) {
     try {
       const articleId = req.params.id;
       const article = await Article.findByPk(+articleId);
@@ -129,10 +135,9 @@ class ArticleController {
         res.json({ message: `${articleId} success to delete` });
       }
     } catch (error) {
-  
       next(error);
     }
   }
 }
 
-module.exports = ArticleController
+module.exports = ArticleController;

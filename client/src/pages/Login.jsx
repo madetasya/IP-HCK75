@@ -27,29 +27,33 @@ export default function Login() {
     }
   };
 
-  const handleGoogleLogin = () => {
-    window.google.accounts.id.prompt();
-  };
-
   useEffect(() => {
-    if (window.google) {
-      window.google.accounts.id.initialize({
-        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-        callback: async (response) => {
-          try {
-            // Send Google token to your server for verification
-            const { data } = await axiosIns.post("/auth/google", {
-              googleToken: response.credential,
-            });
-            localStorage.setItem("access_token", data.access_token); // Store token
-            navigate("/"); // Navigate to homepage
-          } catch (error) {
-            console.error(error);
-          }
-        },
-      });
-    }
-  }, [navigate]);
+    google.accounts.id.initialize({
+      // fill this with your own client ID
+      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+      // callback function to handle the response
+      callback: async (response) => {
+        console.log("Encoded JWT ID token: " + response.credential);
+        const { data } = await axiosIns.post("/auth/google", {
+          googleToken: response.credential,
+        });
+
+        localStorage.setItem("access_token", data.access_token);
+
+        // navigate to the home page or do magic stuff
+        navigate('/');
+      },
+    });
+    google.accounts.id.renderButton(
+      // HTML element ID where the button will be rendered
+      // this should be existed in the DOM
+      document.getElementById("buttonDiv"),
+      // customization attributes
+      { theme: "outline", size: "large" }
+    );
+    // to display the One Tap dialog, or comment to remove the dialog
+    google.accounts.id.prompt();
+  }, []);
 
   return (
     <body className="bg-gradient-to-b from-[#ecebe1] to-[#ffcd76] relative min-h-screen">
@@ -145,7 +149,7 @@ export default function Login() {
               {/* Custom Google Sign-In Button */}
               <button
                 type="button"
-                onClick={handleGoogleLogin}
+                id="buttonDiv"
                 className="w-full bg-[#dde3dfff] text-[#263E40] py-2 rounded-lg shadow-lg hover:bg-brown-600 flex items-center justify-center"
               >
                 <img
