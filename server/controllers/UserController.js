@@ -45,34 +45,38 @@ class UserController {
   }
 
   static async googleLogin(req, res, next) {
-    // we receive googleToken from the client
-    const { googleToken } = req.body;
-    const ticket = await client.verifyIdToken({
-      idToken: googleToken,
-      // we use our client_id from the Google console
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
-    const payload = ticket.getPayload();
-    const [user, created] = await User.findOrCreate({
-      where: { email },
-      defaults: {
-        name: payload.name,
-        email: payload.email,
-        picture: payload.picture,
-        provider: "google",
-        // We can type any password as a placeholder.
-        // In future development, you should implement a feature to update the user's password.
-        password: "google_id",
-      },
-      // Required to set hooks: false
-      hooks: false,
-    });
+    try {
+      // we receive googleToken from the client
+      const { googleToken } = req.body;
+      const ticket = await client.verifyIdToken({
+        idToken: googleToken,
+        // we use our client_id from the Google console
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
-    res.status(created ? 201 : 200).json({ access_token: token });
-  }
-  catch(error) {
-    res.status(500).json({ message: "Internal server error" });
+      const payload = ticket.getPayload();
+      const email = payload.email; // Extract the email from the payload
+
+      const [user, created] = await User.findOrCreate({
+        where: { email },
+        defaults: {
+          name: payload.name,
+          email: payload.email,
+          picture: payload.picture,
+          provider: "google",
+          // We can type any password as a placeholder.
+          // In future development, you should implement a feature to update the user's password.
+          password: "google_id",
+        },
+        // Required to set hooks: false
+        hooks: false,
+      });
+
+      const token = signToken({ id: user.id });
+      res.status(created ? 201 : 200).json({ access_token: token });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
   }
 }
 

@@ -1,10 +1,11 @@
+import { useEffect } from "react";
 import wave01 from "../assets/wave01.png";
 import wave02 from "../assets/wave02.png";
 import wave03 from "../assets/wave03.png";
 import bigsun from "../assets/bigsun.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { axiosIns } from "../axios";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post("/apis/login", {
+      const { data } = await axiosIns.post("/login", {
         email,
         password,
       });
@@ -26,10 +27,32 @@ export default function Login() {
     }
   };
 
-  
+  const handleGoogleLogin = () => {
+    window.google.accounts.id.prompt();
+  };
+
+  useEffect(() => {
+    if (window.google) {
+      window.google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: async (response) => {
+          try {
+            // Send Google token to your server for verification
+            const { data } = await axiosIns.post("/auth/google", {
+              googleToken: response.credential,
+            });
+            localStorage.setItem("access_token", data.access_token); // Store token
+            navigate("/"); // Navigate to homepage
+          } catch (error) {
+            console.error(error);
+          }
+        },
+      });
+    }
+  }, [navigate]);
 
   return (
-    <body className="bg-gradient-to-t from-[#e4d9c7ff] to-[#e4d9c7ff] relative min-h-screen">
+    <body className="bg-gradient-to-b from-[#ecebe1] to-[#ffcd76] relative min-h-screen">
       <div className="absolute bottom-0 left-0 right-0">
         <img
           src={bigsun}
@@ -53,7 +76,7 @@ export default function Login() {
         />
       </div>
       <div className="flex flex-col items-center justify-center min-h-screen bg-beige-100">
-        <div className="relative p-1 bg-gradient-to-t from-[#fef7f1ff] via-[#fef7f1ff] to-[#e79956] rounded-lg">
+        <div className="relative p-1 bg-gradient-to-t from-[#fef7f1ff] via-[#fef7f1ff] to-[#fef7f1ff] rounded-lg">
           <div className="rounded-md w-full max-w-md p-8 space-y-6 bg-[#92bcbeff]">
             <h2 className="text-3xl font-bold text-center text-brown-600 text-[#263E40]">
               Login
@@ -111,11 +134,26 @@ export default function Login() {
                   </label>
                 </div>
               </div>
+
               <button
                 type="submit"
                 className="w-full bg-[#263e40] text-[#fef7f1ff] py-2 rounded-lg shadow-lg hover:bg-brown-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brown-500"
               >
                 Sign in
+              </button>
+
+              {/* Custom Google Sign-In Button */}
+              <button
+                type="button"
+                onClick={handleGoogleLogin}
+                className="w-full bg-[#dde3dfff] text-[#263E40] py-2 rounded-lg shadow-lg hover:bg-brown-600 flex items-center justify-center"
+              >
+                <img
+                  src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                  alt="Google Logo"
+                  className="w-5 h-5 mr-2"
+                />
+                Sign in with Google
               </button>
 
               <p className="text-sm font-light text-brown-400">
@@ -131,7 +169,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <div id="buttonDiv"></div>;
     </body>
   );
 }

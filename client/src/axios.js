@@ -1,5 +1,5 @@
 import axios from "axios";
 
-export const apis = axios.create({
-  baseURL: "https://h8-phase2-gc.vercel.app",
+export const axiosIns = axios.create({
+  baseURL: "http://localhost:3000"
 });
