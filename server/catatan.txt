@@ -1,87 +1,43 @@
-User Controller
+import { useEffect, useState } from "react";
+import { axiosIns } from "../axios";
+import { getDisasterSlogan } from "../helpers/geminiAPI"; // Import fungsi untuk mengambil slogan
 
-const { User } = require("../models");
-const { comparePass } = require("../helpers/bcrypt");
-const { signToken } = require("../helpers/jwt");
-require("dotenv").config();
-const { OAuth2Client } = require("google-auth-library");
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+export default function Homepage() {
+  const [posts, setPosts] = useState([]);
+  const [disasterSlogan, setDisasterSlogan] = useState("");
+  const navigate = useNavigate();
 
-class UserController {
-  static async register(req, res, next) {
-    try {
-      let { userName, email, password } = req.body;
-      let user = await User.create({ userName, email, password });
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await axiosIns.get("/article");
+      setPosts(data.data);
+      const slogan = await getDisasterSlogan(); // Ambil slogan dari GeminiAI
+      setDisasterSlogan(slogan);
+    };
 
-      res.status(201).json({
-        id: user.id,
-        userName: user.userName,
-        email: user.email,
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
-  static async login(req, res, next) {
-    let { email, password } = req.body;
-    try {
-      if (!email || !password) {
-        throw { name: "InvalidInput" };
-      }
+    fetchData();
+  }, []);
 
-      const user = await User.findOne({
-        where: { email },
-      });
-
-      if (!user || !comparePass(password, user.password)) {
-        throw { name: "InvalidUser" };
-      }
-
-      const token = signToken({
-        id: user.id,
-      });
-      res.status(200).json({ access_token: token });
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  static async googleLogin(req, res, next) {
-    try {
-      // we receive googleToken from the client
-      const { googleToken } = req.body;
-      const ticket = await client.verifyIdToken({
-        idToken: googleToken,
-        // we use our client_id from the Google console
-        audience: process.env.GOOGLE_CLIENT_ID,
-      });
-
-      const payload = ticket.getPayload();
-      const email = payload.email; // Extract the email from the payload
-
-      const [user, created] = await User.findOrCreate({
-        where: { email },
-        defaults: {
-          name: payload.name,
-          email: payload.email,
-          picture: payload.picture,
-          provider: "google",
-          // We can type any password as a placeholder.
-          // In future development, you should implement a feature to update the user's password.
-          password: "google_id",
-        },
-        // Required to set hooks: false
-        hooks: false,
-      });
-
-      const token = signToken({ id: user.id });
-      res.status(created ? 201 : 200).json({ access_token: token });
-    } catch (error) {
-      res.status(500).json({ message: "Internal server error" });
-    }
-  }
+  return (
+    <div className="bg-seashell min-h-screen">
+      <div className="container mx-auto py-10">
+        <h1 className="text-5xl font-bold text-center text-chamoisee mb-10">
+          {disasterSlogan}
+        </h1>
+        <div className="flex justify-center mb-10">
+          <button
+            onClick={() => navigate("/create-article")}
+            className="bg-buff text-seashell py-2 px-4 rounded-lg shadow-md hover:bg-chamoisee transition-colors"
+          >
+            Create New Article
+          </button>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {posts.map((post) => (
+            <Card key={post.id} post={post} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }
-
-module.exports = UserController;
-
-

@@ -1,12 +1,14 @@
-const gemai = require("../helpers/gemini")
-class Gemini{
-    static async gemini(req,res,next){
-        try {
-            let data = await gemai()
-            res.status(200).json(data)
-        } catch (error) {
-            next(error)
-        }
+const getDisasterSlogan = require("../helpers/gemini");
+
+class Gemini {
+  static async gemini(req, res, next) {
+    try {
+      const slogan = await getDisasterSlogan();
+      res.status(200).json({ slogan });
+    } catch (error) {
+      next(error);
     }
+  }
 }
-module.exports = Gemini
+
+module.exports = Gemini;

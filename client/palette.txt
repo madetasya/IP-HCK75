@@ -1,3 +1,5 @@
+implementasi kodingan ini dengan perintah berikut:
+
 --chamoisee: #977458ff;
 --buff: #da985bff;
 --seashell: #fef7f1ff;
@@ -7,6 +9,7 @@
 #263E40
 
 buat geminiai hanya menampilkan slogan tentang bencana alam. nanti slogan akan ditaruh di pojok atas login dan register. dan ditaruh juga di Homepage pengganti welcome to the blog dengan font besar dan palette warna yang sesuai
+berikan step stepnya dari awal!
 
 import { useEffect, useState } from "react";
 import Card from "../component/Card";

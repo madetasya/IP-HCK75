@@ -7,12 +7,15 @@ const UserController = require("../controllers/UserController.js");
 const ArticleController = require("../controllers/ArticleController.js");
 
 //CORS
-const cors = require('cors')
-router.use(cors())
-
+const cors = require("cors");
+router.use(cors());
 
 //API GANG
-const Gemini = require("../controllers/GeminiController.js");
+const GeminiController = require("../controllers/GeminiController.js");
+
+// Add the route to fetch the GeminiAI slogan
+router.get("/gemini-slogan", GeminiController.gemini);
+
 // const NewsAPI = require('newsapi');
 // const newsapi = new NewsAPI(API_KEY);
 
@@ -30,21 +33,19 @@ const Gemini = require("../controllers/GeminiController.js");
 //   }
 // });
 
-
 //Register & Login
-router.post("/register", UserController.register)
-router.post("/login",UserController.login)
-router.post("/gemini",Gemini.gemini)
+router.post("/register", UserController.register);
+router.post("/login", UserController.login);
 router.post("/auth/google", UserController.googleLogin);
 
-//Article Controller  
-router.get("/article",ArticleController.getAllArticle);
-router.get("/article/:id",ArticleController.getArticleById);
+//Article Controller
+router.get("/article", ArticleController.getAllArticle);
+router.get("/article/:id", ArticleController.getArticleById);
 // router.use(authentication);
 // router.use(authorization);
-router.post("/article",ArticleController.createArticle);
-router.put("/article/:id",ArticleController.updatePostById );
-router.delete("/article/:id",ArticleController.deleteArticleById);
+router.post("/article", ArticleController.createArticle);
+router.put("/article/:id", ArticleController.updatePostById);
+router.delete("/article/:id", ArticleController.deleteArticleById);
 
 router.use(errorHandler);
 
