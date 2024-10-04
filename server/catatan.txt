@@ -85,6 +85,3 @@ class UserController {
 module.exports = UserController;
 
 
-buat fitur yang mmenggunakan serpapi untuk mendapatkan berita tentang natural disaster
-dalam waktu seminggu setelah itu gemini ai akan menampilkan kalimat "Saat ini sering terjadi ${bencana}" Kemudian dia akan menampilkan artikeel yang ada di database.
-Semua ini dilakukakn di homepage.

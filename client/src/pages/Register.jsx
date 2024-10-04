@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import wave01 from "../assets/wave01.png";
 import wave02 from "../assets/wave02.png";
 import wave03 from "../assets/wave03.png";
@@ -12,7 +12,6 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  // Handle regular registration
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -28,23 +27,6 @@ export default function Register() {
       console.log(error);
     }
   };
-
-  // Handle Google sign-in
-  const handleGoogleLogin = () => {
-    window.google.accounts.id.prompt();
-  };
-
-  // Initialize Google Sign-In
-  useEffect(() => {
-    if (window.google) {
-      window.google.accounts.id.initialize({
-        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-        callback: (response) => {
-          console.log(response.credential);
-        },
-      });
-    }
-  }, []);
 
   return (
     <body className="bg-gradient-to-b from-[#ecebe1] to-[#ffcd76] relative min-h-screen">
@@ -139,20 +121,6 @@ export default function Register() {
                 Register
               </button>
             </form>
-
-            {/* Custom Google Sign-In Button */}
-            <button
-              type="button"
-              onClick={handleGoogleLogin}
-              className="w-full bg-[#dde3dfff] text-[#263E40] py-2 rounded-lg shadow-lg hover:bg-brown-600 flex items-center justify-center"
-            >
-              <img
-                src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
-                alt="Google Logo"
-                className="w-5 h-5 mr-2"
-              />
-              Register with Google
-            </button>
 
             <p className="text-sm font-light text-brown-400">
               Have an account?{" "}
