@@ -1,0 +1,51 @@
+[
+      {
+      "title": "Earthquake",
+      "description": "Mitigation strategies for earthquakes focus on reducing structural damage and improving preparedness in earthquake-prone areas.",
+      "imageUrl": "https://example.com/earthquake.jpg",
+      "UserId": 1
+    },
+    {
+      "title": "Flood",
+      "description": "Flood mitigation aims to prevent or reduce the impact of floods on communities through infrastructure and early warning systems.",
+      "imageUrl": "https://example.com/flood.jpg",
+      "UserId": 2
+    },
+    {
+      "title": "Hurricane/Typhoon",
+      "description": "Hurricane mitigation involves preparedness measures to reduce damage caused by high winds and storm surges in coastal areas.",
+      "imageUrl": "https://example.com/hurricane.jpg",
+      "UserId": 2
+    },
+    {
+      "title": "Drought",
+      "description": "Drought mitigation focuses on conserving water and promoting sustainable agricultural practices in regions prone to water scarcity.",
+      "imageUrl": "https://example.com/drought.jpg",
+      "UserId": 1
+    },
+    {
+      "title": "Wildfire",
+      "description": "Wildfire mitigation strategies aim to reduce the risk of fires through land management, public awareness, and rapid response systems.",
+      "imageUrl": "https://example.com/wildfire.jpg",
+      "UserId": 3
+    },
+    {
+      "title": "Tsunami",
+      "description": "Tsunami mitigation involves creating coastal defenses, evacuation plans, and early warning systems to minimize loss of life.",
+      "imageUrl": "https://example.com/tsunami.jpg",
+      "UserId": 4
+    },
+    {
+
+      "title": "Volcanic Eruption",
+      "description": "Volcanic eruption mitigation focuses on monitoring active volcanoes, creating hazard maps, and developing evacuation plans.",
+      "imageUrl": "https://example.com/volcano.jpg",
+      "UserId": 2
+    },
+    {
+      "title": "Landslide",
+      "description": "Landslide mitigation strategies aim to reduce slope instability and minimize the risk of damage in landslide-prone areas.",
+      "imageUrl": "https://example.com/landslide.jpg",
+      "UserId": 3
+    }
+  ]

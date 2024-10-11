@@ -1,0 +1,30 @@
+[
+  {
+    "userName": "NindaNotNinja",
+    "email": "piring@gmail.com",
+    "password": "c3l4n@",
+    "role": "Admin"
+  },
+
+  {
+    "userName": "IndahKatsuri",
+    "email": "iyanamany@salah.com",
+    "password": "k@s7uR1",
+    "role": "Admin"
+  },
+ 
+  {
+    "userName": "NPC_01",
+    "email": "NPC01@npc.com",
+    "password": "kasiancumaNPC_11",
+    "role": "User"
+  },
+ 
+  {
+    "userName": "NPC_02",
+    "email": "NPC02@npc.com",
+    "password": "kasiancumaNPC_12",
+    "role": "User"
+  }
+
+]
