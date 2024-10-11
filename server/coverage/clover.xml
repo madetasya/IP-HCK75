@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1728620959902" clover="3.2.0">
-  <project timestamp="1728620959902" name="All files">
-    <metrics statements="259" coveredstatements="132" conditionals="58" coveredconditionals="21" methods="26" coveredmethods="14" elements="343" coveredelements="167" complexity="0" loc="259" ncloc="259" packages="6" files="14" classes="14"/>
+<coverage generated="1728623577105" clover="3.2.0">
+  <project timestamp="1728623577106" name="All files">
+    <metrics statements="259" coveredstatements="131" conditionals="58" coveredconditionals="21" methods="26" coveredmethods="13" elements="343" coveredelements="165" complexity="0" loc="259" ncloc="259" packages="6" files="14" classes="14"/>
     <package name="server">
       <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="app.js" path="C:\Users\luhma\Documents\Hacktiv8\Phase2\IP-HCK75\server\app.js">
@@ -167,9 +167,9 @@
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
-        <line num="4" count="5" type="stmt"/>
-        <line num="5" count="5" type="stmt"/>
-        <line num="6" count="5" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
         <line num="10" count="2" type="stmt"/>
         <line num="11" count="2" type="stmt"/>
@@ -244,7 +244,7 @@
       </file>
     </package>
     <package name="server.models">
-      <metrics statements="33" coveredstatements="32" conditionals="10" coveredconditionals="7" methods="8" coveredmethods="8"/>
+      <metrics statements="33" coveredstatements="31" conditionals="10" coveredconditionals="7" methods="8" coveredmethods="7"/>
       <file name="article.js" path="C:\Users\luhma\Documents\Hacktiv8\Phase2\IP-HCK75\server\models\article.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="4" count="1" type="stmt"/>
@@ -278,13 +278,13 @@
         <line num="43" count="1" type="stmt"/>
       </file>
       <file name="user.js" path="C:\Users\luhma\Documents\Hacktiv8\Phase2\IP-HCK75\server\models\user.js">
-        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <metrics statements="7" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
-        <line num="52" count="1" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
         <line num="59" count="1" type="stmt"/>
       </file>
     </package>

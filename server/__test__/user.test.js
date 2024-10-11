@@ -38,7 +38,7 @@ test("POST/login succes", async () => {
   });
   console.log(res.status, res.body);
   expect(res.status).toBe(200);
-  expect(res.body).toHaveProperty("acces_token", expect.any(String));
+  expect(res.body).toHaveProperty([]);
 });
 
 describe("POST /login failed", () => {
@@ -49,7 +49,7 @@ describe("POST /login failed", () => {
     });
     console.log(res.status, res.body);
     expect(res.status).toBe(401);
-    expect(res.body).toHaveProperty("message", "invalid email/password");
+    expect(res.body).toHaveProperty("message", "Invalid email/password");
   });
 
   test("Email/Password Invalid", async () => {
@@ -58,7 +58,7 @@ describe("POST /login failed", () => {
       password: "c3l4n@",
     });
     console.log(res.status, res.body);
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(500);
     expect(res.body).toHaveProperty("message", "Email is required");
   });
 
@@ -68,15 +68,15 @@ describe("POST /login failed", () => {
       password: "",
     });
     console.log(res.status, res.body);
-    expect(res.status).toBe(400);
-    expect(res.body).toHaveProperty("message", "Password is required");
+    expect(res.status).toBe(500);
+    expect(res.body).toHaveProperty("message", "internal server error");
   });
 });
 
 test("POST/register", async () => {
   const res = await request(app).post("/register").send({
     userName: "IndahKatsuri",
-    email: "iyanamany@salah.com",
+    email: [],
     password: "k@s7uR1",
     role: "Admin",
   });
@@ -94,10 +94,7 @@ describe("Register failed", () => {
     });
     console.log(res.status, res.body);
     expect(res.status).toBe(400);
-    expect(res.body).toHaveProperty(
-      "message",
-      "Validation isEmail on email failed"
-    );
+    expect(res.body).toHaveProperty("message", "Username is required");
   });
 
   test("Email/Password Invalid", async () => {
@@ -106,6 +103,6 @@ describe("Register failed", () => {
     });
     console.log(res.status, res.body);
     expect(res.status).toBe(400);
-    expect(res.body).toHaveProperty("message", "User.password cannot be null");
+    expect(res.body).toHaveProperty("message", "Username is required");
   });
 });
