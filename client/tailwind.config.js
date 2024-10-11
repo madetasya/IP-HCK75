@@ -3,6 +3,22 @@ export default {
   content: ["./src/**/*.{html,js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
     extend: {
+      keyframes: {
+        wave: {
+          "0%": {
+            transform: "translateX(-2%)",
+          },
+          "50%": {
+            transform: "translateX(3%)",
+          },
+          "100%": {
+            transform: "translateX(-2%)",
+          },
+        },
+      },
+      animation: {
+        wave: "wave 8s ease-in-out infinite",
+      },
       colors: {
         chamoisee: "#977458ff",
         buff: "#da985bff",

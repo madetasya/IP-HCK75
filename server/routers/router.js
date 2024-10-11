@@ -5,31 +5,24 @@ const authentication = require("../middleware/authentication");
 const authorization = require("../middleware/authorization");
 const UserController = require("../controllers/UserController.js");
 const ArticleController = require("../controllers/ArticleController.js");
-
-//CORS
+const gemini =require("../controllers/GeminiController.js")
 
 //API GANG
-const GeminiController = require("../controllers/GeminiController.js");
+const NewsApiController = require("../controllers/NewsApiController.js");
+router.get("/news/natural-disasters", NewsApiController.getNaturalDisasterNews);
 
-// Add the route to fetch the GeminiAI slogan
-router.get("/gemini-slogan", GeminiController.gemini);
-
-// const NewsAPI = require('newsapi');
-// const newsapi = new NewsAPI(API_KEY);
-
-// router.get('/top-news', async (req, res) => {
-//   try {
-//     const response = await newsapi.v2.topHeadlines({
-//       q: 'trump',
-//       category: 'politics',
-//       language: 'en',
-//       country: 'us'
-//     });
-//     res.json(response);
-//   } catch (error) {
-//     res.status(500).json({ error: 'Failed to fetch news' });
-//   }
-// });
+//gemini
+router.post("/gemini",async (req,res,next) => {
+    try {
+        const {location}=req.body
+        let ai = await gemini(location)
+        res.status(200).json(ai)
+    } catch (error) {
+        console.log(error);
+        next(error)
+        
+    }
+})
 
 //Register & Login
 router.post("/register", UserController.register);

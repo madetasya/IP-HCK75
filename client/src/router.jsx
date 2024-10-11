@@ -7,6 +7,7 @@ import Navbar from "./pages/Navbar";
 import ArticleDetail from "./pages/ArticleDetail";
 import ArticleEdit from "./pages/ArticleEdit";
 import CreateArticle from "./pages/CreateArticle";
+import WeeklyDisaster from "./pages/WeeklyDisaster";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path: "/create-article",
         element: <CreateArticle />,
+      },
+      {
+        path: "/result",
+        element: <WeeklyDisaster />,
       },
     ],
   },

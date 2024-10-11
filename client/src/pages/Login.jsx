@@ -38,24 +38,32 @@ export default function Login() {
   // }, []);
 
   useEffect(() => {
-    google.accounts.id.initialize({
-      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-      callback: async (response) => {
-        console.log("Encoded JWT ID token: " + response.credential);
-        const { data } = await axiosIns.post("/auth/google", {
-          googleToken: response.credential,
-        });
+  const initializeGoogleSignIn = () => {
+    if (window.google) {
+      window.google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: async (response) => {
+          console.log("Encoded JWT ID token: " + response.credential);
+          const { data } = await axiosIns.post("/auth/google", {
+            googleToken: response.credential,
+          });
+          localStorage.setItem("access_token", data.access_token);
+          navigate("/");
+        },
+      });
+      window.google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"),
+        { theme: "outline", size: "large" }
+      );
+      window.google.accounts.id.prompt();
+    } else {
+      console.error('Google API not available yet');
+    }
+  };
 
-        localStorage.setItem("access_token", data.access_token);
-        navigate("/");
-      },
-    });
-    google.accounts.id.renderButton(document.getElementById("buttonDiv"), {
-      theme: "outline",
-      size: "large",
-    });
-    google.accounts.id.prompt();
-  }, []);
+  initializeGoogleSignIn();
+}, [navigate]);
+
 
   return (
     <body className="bg-gradient-to-b from-[#ecebe1] to-[#ffcd76] relative min-h-screen">
@@ -75,17 +83,17 @@ export default function Login() {
         <img
           src={wave03}
           alt="wave1"
-          className="absolute w-full bottom-0 shadow-lg"
+          className="absolute w-[2000px] bottom-0 animate-wave animation-delay-1000 animation-duration-7000"
         />
         <img
           src={wave02}
           alt="wave2"
-          className="absolute w-full bottom-0 shadow-lg"
+          className="absolute w-[2000px] bottom-0 animate-wave animation-delay-500 animation-duration-6000"
         />
         <img
           src={wave01}
           alt="wave3"
-          className="absolute w-full bottom-0 shadow-sm"
+          className="absolute w-[2000px] bottom-0 animate-wave animation-duration-5000"
         />
       </div>
 
@@ -156,7 +164,7 @@ export default function Login() {
                 Sign in
               </button>
 
-              {/* Custom Google Sign-In Button */}
+              {/* Google Login */}
               <button
                 type="button"
                 id="buttonDiv"
