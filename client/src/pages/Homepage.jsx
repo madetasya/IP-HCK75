@@ -1,27 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Card from "../component/Card";
 import { useNavigate } from "react-router-dom";
-import { axiosIns } from "../axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPosts } from "../features/postSlice";
 
 export default function Homepage() {
-  const [posts, setPosts] = useState([]);
-  const [disasters, setDisasters] = useState([]);
   const navigate = useNavigate();
+  const { data } = useSelector((state) => state.post);
 
-  const getPost = async () => {
-    try {
-      const { data } = await axiosIns.get("/article");
-      console.log();
-      
-      setPosts(data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getPost();
-  }, []);
+    dispatch(fetchPosts()); // Correctly invoke the fetchPosts action
+  }, [dispatch]);
 
   return (
     <div className="bg-[#263E40] min-h-screen">
@@ -44,12 +35,12 @@ export default function Homepage() {
             onClick={() => navigate("/result")}
             className="bg-bone text-chamoisee py-2 px-4 rounded-lg shadow-md hover:bg-light-blue hover:text-seashell transition-colors"
           >
-            Disaster This Week
+            Disaster Mitigation
           </button>
         </div>
 
         <div className="grid grid-cols-1 gap-6">
-          {posts.map((post) => (
+          {data?.data?.map((post) => (
             <Card key={post.id} post={post} />
           ))}
         </div>
